@@ -1,7 +1,7 @@
 # Falling sand game
 
 This is a falling sand game, based on the idea found in [a game from
-dan-ball.jp](https://dan-ball.jp/en/javagame/dust/). It is written in assembler,
+dan-ball.jp](https://dan-ball.jp/en/javagame/dust/). It is written in assembly,
 and the binary fits is 512 bytes.
 
 In order to run it, you need `nasm`. After installing `nasm`, simply run the
