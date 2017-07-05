@@ -1,13 +1,15 @@
 # Falling sand game
 
 This is a falling sand game, based on the idea found in [a game from
-dan-ball.jp](https://dan-ball.jp/en/javagame/dust/). It is written in x86
-assembly, and the binary fits is 512 bytes.
+dan-ball.jp][1]. It is written in x86 assembly, and the binary fits is 512
+bytes.
 
 In order to run it, you need `nasm`. After installing `nasm`, simply run the
 Makefile and the `.flp` file will contain the binary. This file can then be
 written as the first 512 bytes of an usb, which will then be bootable, or you
 can put it in a floppy controller in virtualbox.
+
+![image of the game][2]
 
 # Usage:
 
@@ -23,3 +25,6 @@ Move around the cursor with arrow keys. Press `s` to pause/unpause. The keys 1,
 Wall and air never moves. Sand and water falls if above air. If sand is on solid
 ground it will form a pile, and if water is on solid ground, it will form a
 lake.
+
+ [1]: https://dan-ball.jp/en/javagame/dust/
+ [2]: https://ryhl.io/img/fsg.png
