@@ -123,7 +123,6 @@ really_do_step:
   jmp next_step_start
 
 gen_random:
-  mov ah, 0 ; maybe redundant
   mov al, [RANDOM]
   shr al, 1
   mov bl, 73
