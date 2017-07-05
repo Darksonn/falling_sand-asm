@@ -50,8 +50,8 @@ step_start:
   jmp next_step_start
 .do_step:
   mov al, [CLOCK_STEP]
-  cmp al, 255
-  jmp really_do_step
+  cmp al, 4
+  je really_do_step
   inc al
   mov [CLOCK_STEP], al
 next_step_start:
