@@ -19,6 +19,9 @@ BITS 16
 %define IS_STEPPING_FLAG 999
 %define STATE 1000
 
+; how many clock pulses from the 100 Hz clock should happen for each game
+; step?
+%define CLOCK_STEPS_PER_STEP 4
 %define WIN_W 80
 %define WIN_H 24
 %define WIN_SIZE (WIN_W*WIN_H)
@@ -50,7 +53,7 @@ step_start:
   jmp next_step_start
 .do_step:
   mov al, [CLOCK_STEP]
-  cmp al, 4
+  cmp al, CLOCK_STEPS_PER_STEP
   je really_do_step
   inc al
   mov [CLOCK_STEP], al
