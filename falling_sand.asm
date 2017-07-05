@@ -19,8 +19,7 @@ BITS 16
 %define IS_STEPPING_FLAG 999
 %define STATE 1000
 
-; how many clock pulses from the 100 Hz clock should happen for each game
-; step?
+; how many clock pulses from the 100 Hz clock should happen for each game step?
 %define CLOCK_STEPS_PER_STEP 2
 %define WIN_W 80
 %define WIN_H 24
@@ -29,24 +28,29 @@ BITS 16
   mov byte [CLOCK_STEP], 0
   mov byte [IS_SPAWNING], 0
 
-  ; hidden cursor
+  ; make the cursor hidden
   mov cx, 2607h
   mov ah, 01h
   int 10h
 
 setup:
   mov bx, 0
-.clear_loop:
+.clear_loop: ; make the entire map air
   mov byte [STATE+bx], 0
   inc bx
   cmp bx, WIN_W * (WIN_H - 1)
   jne .clear_loop
+  ; make the two lowest rows wall
+  ; note that the lowest row is outside the view
+  ; the row outside the view is just to make sure that water/sand can't fall out
+  ; of the buffer
 .clear_loop_2:
   mov byte [STATE+bx], 1
   inc bx
   cmp bx, WIN_SIZE + WIN_W
   jne .clear_loop_2
   mov bx, 0
+  ; add walls
 .clear_loop_3:
   mov byte [STATE+bx], 1
   mov byte [(STATE+WIN_W-1)+bx], 1
@@ -64,7 +68,7 @@ setup:
   out 40h, al
 
 step_start:
-  call gen_random
+  add byte [RANDOM], 1
 
   call print_state
   cmp byte [IS_SPAWNING], 1
@@ -254,9 +258,15 @@ keyboardhandler:
   mov [POSITION], ax
   jmp .end
 .arrow_key_left:
+  mov ax, [POSITION]
+  cmp ax, 0
+  je .end
   add word [POSITION], -1
   jmp .end
 .arrow_key_right:
+  mov ax, [POSITION]
+  cmp ax, WIN_SIZE - 1
+  je .end
   add word [POSITION], 1
   jmp .end
 .spawn:
