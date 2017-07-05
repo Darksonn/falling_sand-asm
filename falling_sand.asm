@@ -157,7 +157,7 @@ gen_random:
   shr al, 1
   mov bl, 73
   mul bl
-  add al, 7
+  add al, 57
   mov [RANDOM], al
   mov bl, al
   ret
