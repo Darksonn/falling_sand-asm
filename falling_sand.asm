@@ -21,7 +21,7 @@ BITS 16
 
 ; how many clock pulses from the 100 Hz clock should happen for each game
 ; step?
-%define CLOCK_STEPS_PER_STEP 4
+%define CLOCK_STEPS_PER_STEP 2
 %define WIN_W 80
 %define WIN_H 24
 %define WIN_SIZE (WIN_W*WIN_H)
@@ -34,7 +34,34 @@ BITS 16
   mov ah, 01h
   int 10h
 
-  call setup
+setup:
+  mov bx, 0
+.clear_loop:
+  mov byte [STATE+bx], 0
+  inc bx
+  cmp bx, WIN_W * (WIN_H - 1)
+  jne .clear_loop
+.clear_loop_2:
+  mov byte [STATE+bx], 1
+  inc bx
+  cmp bx, WIN_SIZE + WIN_W
+  jne .clear_loop_2
+  mov bx, 0
+.clear_loop_3:
+  mov byte [STATE+bx], 1
+  mov byte [(STATE+WIN_W-1)+bx], 1
+  add bx, WIN_W
+  cmp bx, WIN_SIZE + WIN_W
+  jne .clear_loop_3
+
+  ; set up timer
+  ; the timer interrupts the hardware with 100 Hz
+  mov al, 36h
+  out 43h, al
+  mov ax, 11931 ; 100 Hz
+  out 40h, al
+  mov ah, al
+  out 40h, al
 
 step_start:
   call gen_random
@@ -135,35 +162,6 @@ gen_random:
   mov bl, al
   ret
 
-setup:
-  mov bx, 0
-.clear_loop:
-  mov byte [STATE+bx], 0
-  inc bx
-  cmp bx, WIN_W * (WIN_H - 1)
-  jne .clear_loop
-.clear_loop_2:
-  mov byte [STATE+bx], 1
-  inc bx
-  cmp bx, WIN_SIZE + WIN_W
-  jne .clear_loop_2
-  mov bx, 0
-.clear_loop_3:
-  mov byte [STATE+bx], 1
-  mov byte [(STATE+WIN_W-1)+bx], 1
-  add bx, WIN_W
-  cmp bx, WIN_SIZE + WIN_W
-  jne .clear_loop_3
-
-  ; set up timer
-  ; the timer interrupts the hardware with 100 Hz
-  mov al, 36h
-  out 43h, al
-  mov ax, 11931 ; 100 Hz
-  out 40h, al
-  mov ah, al
-  out 40h, al
-  ret
 
 print_state:
   ; move cursor to upper left
