@@ -19,6 +19,13 @@ BITS 16
 %define IS_STEPPING_FLAG 999
 %define STATE 1000
 
+; it's a deliberate choice that IS_STEPPING_FLAG is just below STATE, since that
+; means if something at [STATE+0] is trying to move to the left, then it will
+; meet IS_STEPPING_FLAG, but since it is trying to move to the left, we are
+; currently stepping, which means IS_STEPPING_FLAG is 1, which is the same as
+; wall
+
+
 ; how many clock pulses from the 100 Hz clock should happen for each game step?
 %define CLOCK_STEPS_PER_STEP 2
 %define WIN_W 80
