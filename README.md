@@ -9,7 +9,8 @@ Makefile and the `.flp` file will contain the binary. This file can then be
 written as the first 512 bytes of an usb, which will then be bootable, or you
 can put it in a floppy controller in virtualbox.
 
-![image of the game][2]
+![untitled](https://github.com/Tahinli/falling_sand-asm/assets/96421894/6fec7c8b-0c59-4758-80fe-4286ef9af091)
+
 
 # Usage:
 
@@ -27,4 +28,3 @@ ground it will form a pile, and if water is on solid ground, it will form a
 lake.
 
  [1]: https://dan-ball.jp/en/javagame/dust/
- [2]: https://ryhl.io/img/fsg.png
