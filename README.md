@@ -9,7 +9,8 @@ Makefile and the `.flp` file will contain the binary. This file can then be
 written as the first 512 bytes of an usb, which will then be bootable, or you
 can put it in a floppy controller in virtualbox.
 
-![image of the game][2]
+<img src="/hello.gif">
+
 
 # Usage:
 
@@ -27,4 +28,4 @@ ground it will form a pile, and if water is on solid ground, it will form a
 lake.
 
  [1]: https://dan-ball.jp/en/javagame/dust/
- [2]: https://ryhl.io/img/fsg.png
+    
